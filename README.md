@@ -1,1 +1,1 @@
-# frenzyApp
+# freanzy-app

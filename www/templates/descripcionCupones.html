@@ -1,0 +1,118 @@
+<style>
+    .bar.bar-positive    {
+    box-shadow: 0 0 0px white;
+}
+</style>
+ <ion-view ng-repeat = "cupon in cupons">
+  <!--************  HEADER  ***************-->
+  <ion-header-bar align-title="center" class="bar-positive" style=" position:relative;">
+        <i class="icon ion-chevron-left backButtomStyle" onclick="goBack()"  nav-transition="none" ></i>
+        <h1 class="title"  style="font-weight: bolder;">{{cupon.Category}}</h1>
+    </ion-header-bar>
+    <ion-content style="background-color:#F1F2F2;">
+    <!--**********************************************************************-->
+    <img class="labelOfferts" src="img/etiquetaOfertas.png" alt="label">
+    <!--*****  PRICE LABEL OFFERTS  *****-->
+    <div class="row pageFavoritesBoxPriceLabel">
+        <div class="col col-25">
+            <p class="cuponsDescriptionsLabelExchance">
+                Canjea
+            </p>
+            <p class="pageFavoritesSavingPrice">
+                Q.{{cupon.Canjea}}
+            </p>
+        </div>
+    </div>
+    <img class="cuponsDescriptionImage" src="{{cupon.PhotoCupon._url}}" alt="nissan">
+    <div class="cuponsDescriptionDiv2">
+       <div class="row">
+           <div class="col col-75 cuponsDescriptionTitle open_sans">
+               {{cupon.Presentation }}
+           </div>
+           <div class="col col-25">
+               <div class="cuponsDescriptionPinCircle home">W</div>
+           </div>
+       </div>
+    </div>
+    <div class="row cuponsDescriptionDiv3">
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+        <p class="semi-circulo"></p><p class="semi-circulo"></p>
+    </div>
+    <br>
+    <div>
+        <p class="cuponsDescriptionTitleDescription">Descripccion y Condiciones</p>
+    </div>
+    <div>
+        <p class="cuponsDescriptionMainDescription">
+             {{cupon.description}}
+        </p>
+    </div>
+    <br>
+   <!--***************  EXCHANGE BUTTON  ********************-->
+    <a href="javascript:MostrarOcultar('texto4');" style="text-decoration:none;"  class="botonCanjear">
+    <div class="row">
+        <div class="col col-25"></div>
+        <div class="col col-50" onclick="botonCanjear()">
+            <!--**********  ICON CATEGORIES  **********-->
+            <div>
+                <div id="popup">
+                    <p class="exchangeButonStyle">Canjear</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-25"></div>
+    </div>
+    </a>
+    <div class="cp_oculta " id="texto4">
+        <div class="row">
+           <div class="col col-10"></div>
+           <div class="col col-80 exchangeBoxBarCode">
+               <img class="exchangeBoxBarCodeImage" src="{{cupon.BarCodePhoto._url}}" alt="" >
+           </div>
+           <div class="col col-10"></div>
+        </div>
+    </div>
+   <div class="exchangeButtonBlankSpaceButton"></div>
+
+    </ion-content>
+    <!--**********************************************************************-->
+    <!--************************* FOOTHER  ******************************-->
+ <ion-footer-bar align-title="left" class="bar-stable" style="background-color:#E6E7E8  ;border-style:none;">
+  <div class="row home">
+      <div class="col col-10"></div>
+      <!--************  ICONO FOOTER HOME  ******************-->
+      <div class="col col-25">
+          <a href="#/app/playlists" style="color:#A7A9AC  ; text-decoration:none;" nav-transition="none">
+              <div>A</div>
+          </a>
+      </div>
+      <!--************  ICONO FOOTER HEART  ******************-->
+      <div class="col col-25">
+          <a href="#/app/favoritos" style="color:#A7A9AC  ; text-decoration:none;" nav-transition="none" onclick="viewFavorite()">
+              <div>B</div>
+          </a>
+      </div>
+      <!--************  ICONO FOOTER STAR  ******************-->
+      <div class="col col-25">
+          <a href="#/app/salvados" style="color:#A7A9AC  ; text-decoration:none;" nav-transition="none">
+              <div>W</div>
+          </a>
+      </div>
+      <!--************  ICONO FOOTER TOOL  ******************-->
+      <div class="col col-25">
+          <a href="#/app/herramientas" style="color:#3F51B5  ; text-decoration:none;" nav-transition="none">
+              <div>D</div>
+          </a>
+      </div>
+      <!--*************************************************-->
+  </div>
+</ion-footer-bar>
+</ion-view>
