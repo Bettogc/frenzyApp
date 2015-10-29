@@ -130,252 +130,143 @@ angular.module('starter.controllers', ['ionic'])
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons) {
 	$scope.cupons = DescriptionCupons.all($stateParams.DescriptionID);
 })
-
-
+// ********* SUPERMARKET CONTROLLER *********
 .controller('SupermercadoCtrl', function($scope, Supermercados) {
-  var dimensions = {
-	name: 'supermarketMenu'
-  };
-  Parse.Analytics.track("view", dimensions);
-
-  $scope.chats = Supermercados.all();
-})
-
-.controller('RestaurantesCtrl', function($scope, Restaurantes) {
-  var dimensions = {
-	name: 'restaurantMenu'
-  };
-  Parse.Analytics.track("view", dimensions);
-
-  $scope.chats = Restaurantes.all();
-})
-
-.controller('ModaCtrl', function($scope, Moda) {
-  var dimensions = {
-	name: 'fashionMenu'
-  };
-  Parse.Analytics.track("view", dimensions);
-
-  $scope.chats = Moda.all();
-})
-
-.controller('EntretenimientoCtrl', function($scope, Entretenimiento) {
-  var dimensions = {
-	name: 'entertainmentMenu'
-  };
-  Parse.Analytics.track("view", dimensions);
-
-  $scope.chats = Entretenimiento.all();
-})
-
-.controller('ElectronicosCtrl', function($scope, Electronicos) {
-  var dimensions = {
-	name: 'electronicsMenu'
-  };
-  Parse.Analytics.track("view", dimensions);
-
-  $scope.chats = Electronicos.all();
-})
-.controller('OtrosCtrl', function($scope, Otros) {
-  var dimensions = {
-	name: 'othersMenu'
-  };
-  Parse.Analytics.track("view", dimensions);
-
-  $scope.chats = Otros.all();
-})
-
-.controller('CategoryCtrl', function($scope, Categorys) {
-	// With the new view caching in Ionic, Controllers are only called
-	// when they are recreated or on app start, instead of every page change.
-	// To listen for when this page is active (for example, to refresh data),
-	// listen for the $ionicView.enter event:
-	//$scope.$on('$ionicView.enter', function(e) {
-	//});
 	var dimensions = {
-	  name: 'categoriesMenu'
+		name: 'supermarketMenu'
+	};
+	Parse.Analytics.track("view", dimensions);
+
+	$scope.chats = Supermercados.all();
+})
+// ********* RESTAURANTS CONTROLLER *********
+.controller('RestaurantesCtrl', function($scope, Restaurantes) {
+	var dimensions = {
+		name: 'restaurantMenu'
+	};
+	Parse.Analytics.track("view", dimensions);
+
+	$scope.chats = Restaurantes.all();
+})
+// ********* FASION CONTROLLER *********
+.controller('ModaCtrl', function($scope, Moda) {
+	var dimensions = {
+		name: 'fashionMenu'
+	};
+	Parse.Analytics.track("view", dimensions);
+
+	$scope.chats = Moda.all();
+})
+// ********* ENTERTAINMENT CONTROLLER *********
+.controller('EntretenimientoCtrl', function($scope, Entretenimiento) {
+	var dimensions = {
+		name: 'entertainmentMenu'
+	};
+	Parse.Analytics.track("view", dimensions);
+
+	$scope.chats = Entretenimiento.all();
+})
+// ********* ELECTRONICS CONTROLLER *********
+.controller('ElectronicosCtrl', function($scope, Electronicos) {
+	var dimensions = {
+		name: 'electronicsMenu'
+	};
+	Parse.Analytics.track("view", dimensions);
+
+	$scope.chats = Electronicos.all();
+})
+// ********* OTHERS CONTROLLER *********
+.controller('OtrosCtrl', function($scope, Otros) {
+	var dimensions = {
+		name: 'othersMenu'
+	};
+	Parse.Analytics.track("view", dimensions);
+
+	$scope.chats = Otros.all();
+})
+// ********* CATEGORY CONTROLLER *********
+.controller('CategoryCtrl', function($scope, Categorys) {
+	var dimensions = {
+		name: 'categoriesMenu'
 	};
 	Parse.Analytics.track("view", dimensions);
 
 	$scope.categorys = Categorys.all();
-
-  })
-  /****************************  tamayo  *****************************************/
-  .controller('PaizCtrl', function($scope, $stateParams, Paiz) {
-	console.log("calling PaizCtrl");
-
+})
+// ***************************  PAIZ CONTROLLER  ***************************
+.controller('PaizCtrl', function($scope, $stateParams, Paiz) {
 	var dimensions = {
-	  name: $stateParams.superId,
+		name: $stateParams.superId,
+	};
+
+	Parse.Analytics.track("view", dimensions);
+	$scope.$on('$ionicView.enter', function() {
+		$scope.chats = Paiz.get($stateParams.superId);
+		$scope.popover = Paiz.all($stateParams.superId);
+		$scope.heartMenu = "silver";
+		$scope.Cupcon = Cupcont.length
+
+		$scope.heartPopover = function(id){
+			var favorite = new Parse.Query('Favorite');
+			favorite.equalTo("UserID", IdUsuario);
+			favorite.equalTo("CustomerID", id);
+			favorite.find({
+				success: function(results) {
+					if ( results.length > 0 ) {
+						$scope.heartMenu = "red";
+					}
+				},
+				error: function(myObject, error) {
+					// Error occureds
+					console.log( error );
+				}
+			});
+		}
+	});
+})
+// *************************** CHAT DETAIL CONTROLLER ***************************
+.controller('ChatDetailCtrl', function($scope, $stateParams, Categorys) {
+	$scope.chat = Categorys.get($stateParams.chatId);
+})
+// *************************** OUR FAVORITES CONTROLLER ***************************
+.controller('OurfavoritesCtrl', function($scope, OurFavorites) {
+	var dimensions = {
+		name: 'frenzyFavorites',
+	};
+	Parse.Analytics.track("view", dimensions);
+	$scope.ourFavorites = OurFavorites.all();
+})
+// *************************** ALL FAVORITE CONTROLLER ***************************
+.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
+	var dimensions = {
+		name: 'userFavorites',
 	};
 	Parse.Analytics.track("view", dimensions);
 
 	$scope.$on('$ionicView.enter', function() {
-	  $scope.chats = Paiz.get($stateParams.superId);
-	  $scope.popover = Paiz.all($stateParams.superId);
-
-	  $scope.heartMenu = "silver";
-	  $scope.Cupcon = Cupcont.length
-	  console.log(Cupcont.length,"llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll");
-
-	  $scope.heartPopover = function(id){
-	  /*    console.log("exitoso", HeartPopover)
-		  */
-		  //console.log(dato)
-		  console.log("id",id);
-		  console.log("userId", IdUsuario);
-
-		  var favorite = new Parse.Query('Favorite');
-		  favorite.equalTo("UserID", IdUsuario);
-		  favorite.equalTo("CustomerID", id);
-
-		  favorite.find({
-			success: function(results) {
-			  // If result is returned with with at least one element
-			  // then it is true
-			  if ( results.length > 0 ) {
-				$scope.heartMenu = "red";
-			  }
-			},
-			error: function(myObject, error) {
-			  // Error occureds
-			  console.log( error );
-			}
-		  });
-	  }
+		$scope.chats = AllFavorite.all();
 	});
-	console.log(Paiz);
-  })
-  /****************************  tamayo  final*****************************************/
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Categorys) {
-  $scope.chat = Categorys.get($stateParams.chatId);
+	$scope.getAllFavorites = function() {};
 })
-
-.controller('OurfavoritesCtrl', function($scope, OurFavorites) {
-  var dimensions = {
-	name: 'frenzyFavorites',
-  };
-  Parse.Analytics.track("view", dimensions);
-  $scope.ourFavorites = OurFavorites.all();
-  // $scope.$on('$ionicView.enter', function() {
-  //   var PromoSavess = new Parse.Query('PromotionSaved')
-  //   PromoSavess.equalTo("UserID", IdUsuario);
-  //   PromoSavess.find({
-  //     success: function(results) {
-  //       // If result is returned with with at least one element
-  //       // then it is true
-  //       console.log(results[0].attributes)
-  //       for (a in results[0].attributes.PromotionID){
-  //             for (b in PhotoPaiz){
-  //               //console.log(PhotoPaiz[b])
-  //                 if (results[0].attributes.PromotionID[a] === PhotoPaiz[b].IDpromotion){
-  //                     console.log("Encontrado")
-  //                     console.log( PhotoPaiz[b].IDpromotion,"bbbbbbbb")
-  //                      //document.getElementById(PhotoPaiz[b].IDpromotion).style.color="purple";
-  //                      //console.log("-----------------")
-  //                      //console.log( results[x].attributes.PromotionID[a])
-  //                     var cssColorpinOffer = document.getElementById(PhotoPaiz[b].IDpromotion).style.color;
-  //                     if (cssColorpinOffer=="silver"){
-  //                       document.getElementById(PhotoPaiz[b].IDpromotion).style.color="purple";
-  //                                }
-  //                  }
-  //             }
-  //       }
-  //     },
-  //     error: function(myObject, error) {
-  //       // Error occureds
-  //       console.log( error );
-  //     }
-  //   });
-  // });
-
-
-
-
-})
-
-.controller('BarraCtrl', function($scope, Barra) {
-  $scope.chats = Barra.get();
-})
-
-.controller('AllFavoriteCtrl', function($scope, $stateParams, AllFavorite) {
-  console.log("Called AllFavoriteCtrl");
-  console.log(AllFavorite);
-
-  var dimensions = {
-	name: 'userFavorites',
-  };
-  Parse.Analytics.track("view", dimensions);
-
-
-  $scope.$on('$ionicView.enter', function() {
-	$scope.chats = AllFavorite.all();
-	// var PromoSaves = new Parse.Query('PromotionSaved')
-	// PromoSaves.equalTo("UserID", IdUsuario);
-	// PromoSaves.find({
-	//   success: function(results) {
-	//     // If result is returned with with at least one element
-	//     // then it is true
-	//     console.log(results[0].attributes)
-	//     for (a in results[0].attributes.PromotionID){
-	//           for (b in PhotoPaiz){
-	//             //console.log(PhotoPaiz[b])
-	//               if (results[0].attributes.PromotionID[a] === PhotoPaiz[b].IDpromotion){
-	//                   console.log("Encontrado")
-	//                   console.log( PhotoPaiz[b].IDpromotion,"bbbbbbbb")
-	//                    //document.getElementById(PhotoPaiz[b].IDpromotion).style.color="purple";
-	//                    //console.log("-----------------")
-	//                    //console.log( results[x].attributes.PromotionID[a])
-	//                   var cssColorpinOffer = document.getElementById(PhotoPaiz[b].IDpromotion).style.color;
-	//                   if (cssColorpinOffer=="silver"){
-	//                     document.getElementById(PhotoPaiz[b].IDpromotion).style.color="purple";
-	//                              }
-	//                }
-	//           }
-	//     }
-	//   },
-	//   error: function(myObject, error) {
-	//     // Error occureds
-	//     console.log( error );
-	//   }
-	// });
-  });
-
-
-  //$scope.chats = AllFavorite.get($stateParams.superId);
-
-
-
-
-  $scope.getAllFavorites = function() {
-
-  };
-
-})
-
-
+// *************************** ALL PROMOTION ***************************
 .controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
-  //console.log("calling PaizCtrl");
-  var dimensions = {
-	name: 'allPromotions',
-  };
-  Parse.Analytics.track("view", dimensions);
+	var dimensions = {
+		name: 'allPromotions',
+	};
+	Parse.Analytics.track("view", dimensions);
 
-  $scope.$on('$ionicView.enter', function() {
-	$scope.chats = AllPromotion.all($stateParams.salvadosId);
-  });
-  console.log("AllPromotionCtrl called");
-  console.log(AllPromotion);
+	$scope.$on('$ionicView.enter', function() {
+		$scope.chats = AllPromotion.all($stateParams.salvadosId);
+	});
 })
-
-
+// *************************** ACCOUNT CONTROLLER ***************************
 .controller('AccountCtrl', function($scope) {
-  var dimensions = {
-	name: 'settings',
-  };
-  Parse.Analytics.track("view", dimensions);
+	var dimensions = {
+		name: 'settings',
+	};
+	Parse.Analytics.track("view", dimensions);
 
-  $scope.settings = {
-	enableFriends: true
-  };
+	$scope.settings = {
+		enableFriends: true
+	};
 });
