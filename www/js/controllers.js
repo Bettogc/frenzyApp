@@ -247,7 +247,7 @@ angular.module('starter.controllers', ['ionic'])
 		$scope.chats = AllFavorite.all();
 	});
 	$scope.getAllFavorites = function() {};
-})
+	})
 // *************************** ALL PROMOTION ***************************
 .controller('AllPromotionCtrl', function($scope, $stateParams, AllPromotion) {
 	var dimensions = {

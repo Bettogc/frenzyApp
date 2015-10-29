@@ -577,22 +577,21 @@ prom.then(function(){
 // ************* CATEGORY LIST NAME VARIABLE *************
 var CategoryListName = [];
 var CategoryListNameConteo = [];
-// ************* PROMOTION FOR CATEGORY APP *************
 query = query.limit(100);
 query.find({
 	success: function(results) {
 		// cycle through the results
 		var PromotionS = Parse.Object.extend("Promotion");
 		var q = new Parse.Query(PromotionS);
-
 		for ( x in results) {
 			List_name.push(results[x].attributes.CategoryName)
 			q.equalTo("CategoryApp", results[x].attributes.CategoryName);
-
 			var pro = q.find({
 				success: function(results) {
 					for (a in results){
-						CategoryListNameConteo.push({cont:results[a].attributes.CategoryApp})
+						if (results[a].attributes.Status === true) {
+							CategoryListNameConteo.push({cont:results[a].attributes.CategoryApp})
+						}
 					}
 				},
 				error: function(error) {
@@ -600,14 +599,12 @@ query.find({
 					console.log(error);
 				}
 			});
-
 			CategoryListName.push({
 				name: results[x].attributes.CategoryName,direc:results[x].attributes.CategoryName,cont_promo:0,icon: results[x].attributes.IconCategory,
 				color : results[x].attributes.ColorCategory
 			})
 			name  = results[x].attributes.CategoryName
 		}
-		// *********** WHEN THE PROMISE READY ***********
 		pro.then(function(){
 			for (w in CategoryListName){
 				for(s in CategoryListNameConteo){
@@ -764,45 +761,44 @@ function Promotions(id){
 // *************** HEART POPOVER FUNCTION ***************
 var HeartPopover = [];
 function Heart(id){
-    favorite.find({
-        success: function(results) {
-
-            for (x in results) {
-                //console.log(results[x].attributes.CustomerID)
-                //console.log(results[x].attributes.UserID)
-
-                    if (results[x].attributes.UserID===IdUsuario){
-                       // console.log("find user")
-                        for (a in Categorys){
-                           //console.log(Categorys[a].names)
-                            //console.log("a",Categorys[a].nameCategory)
-                            for(b in results[x].attributes.CustomerID){
-                                //console.log("s",results[x].attributes.CustomerID[b])
-                                if(Categorys[a].nameCategory ===results[x].attributes.CustomerID[b]){
-                                    //console.log(":D",Categorys[a].ID,":DD",Categorys[a].nameCategory, "--",Categorys[a].names)
-                                     //console.log("s",id,"---",Categorys[a].names)
-                                    if (id === Categorys[a].names){
-                                        //console.log("se guardo",id,"---",Categorys[a])
-                                           document.getElementById(Categorys[a].ID+" "+Categorys[a].nameCategory).style.color="red";
-                                        console.log(Categorys[a].ID,Categorys[a].nameCategory)
-                                        //HeartPopover.push({id:Categorys[a].ID,name:Categorys[a].nameCategory})
-                                    }
-                                }
-                            }
-                        }
-                }else{
-                    console.log("the user no found")
-                }
-            }
-            //console.log(PhotoPaiz)
-
-      },
-      error: function(myObject, error) {
-        // Error occureds
-        console.log( error );
-      }
-    });
-
+	favorite.find({
+		success: function(results) {
+			for (x in results) {
+				if (results[x].attributes.UserID===IdUsuario){
+					for (a in Categorys){
+						for(b in results[x].attributes.CustomerID){
+							if(Categorys[a].nameCategory ===results[x].attributes.CustomerID[b]){
+								if (id === Categorys[a].names){
+									document.getElementById(Categorys[a].ID+" "+Categorys[a].nameCategory).style.color="red";
+								}
+							}
+						}
+					}
+				}else{
+					console.log("the user no found")
+				}
+			}
+		},
+		error: function(myObject, error) {
+			// Error occureds
+			console.log( error );
+		}
+	});
+}
+// *************** VIEW FAVORITE FUNCTION ****************
+function viewFavorite() {
+	AllFavorite = [];
+	favorite.each(function(results) {
+		for(b in results.attributes.CustomerID){
+			if(results.attributes.UserID===IdUsuario){
+				for (c in PhotoPaiz){
+					if (PhotoPaiz[c].Category === results.attributes.CustomerID[b]){
+						AllFavorite.push(PhotoPaiz[c]);
+					}
+				}
+			}
+		}
+	});
 }
 // *************** VIEW PROMOTION FUNCTION ***************
 function viewPromotion(){
