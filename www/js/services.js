@@ -625,31 +625,34 @@ query.find({
 });
 // *************** CALL GET PROMOTIONS FUNCTION IN PARSE CLOUD CODE ***************
 Parse.Cloud.run('GetPromotions', {}, {
-	success: function(result) {
-		// Call GetQuantityPromotions function in Parse Cloud Code and send result like parameter
-		Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
-			success: function(result) {
-				// Call GetAverageSavings function in Parse Cloud Code and send result like parameter
-				Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
-					success: function(result) {
-						// Call AddPromotions function and send result like parameter AddPromotions(result)
-					},
-					error: function(error) {
-						// Show error if call failed
-						console.log(error);
-					}
-				});
-			},
-			error: function(error) {
-				// Show error if call failed */
-				console.log(error);
-			}
-		});
-	},
-	error: function(error) {
-		// Show error if call failed */
-		console.log(error);
-	}
+    success: function(result) {
+        /* Call GetQuantityPromotions function in Parse Cloud Code and
+        send result like parameter */
+        Parse.Cloud.run('GetQuantityPromotions', {"Array":result}, {
+            success: function(result) {
+                /* Call GetAverageSavings function in Parse Cloud Code and
+                send result like parameter */
+                Parse.Cloud.run('GetAverageSavings', {"Array":result}, {
+                    success: function(result) {
+                        /* Call AddPromotions function and send result like parameter */
+                        AddPromotions(result);
+                    },
+                    error: function(error) {
+                        /* Show error if call failed */
+                        console.log(error);
+                    }
+                });
+            },
+            error: function(error) {
+                /* Show error if call failed */
+                console.log(error);
+            }
+        });
+    },
+    error: function(error) {
+        /* Show error if call failed */
+        console.log(error);
+    }
 });
 // *************** ADD PROMOTION FUNCTION ***************
 var GameScore = Parse.Object.extend("Promotion");
@@ -761,45 +764,45 @@ function Promotions(id){
 // *************** HEART POPOVER FUNCTION ***************
 var HeartPopover = [];
 function Heart(id){
-	favorite.find({
-		success: function(results) {
-			for (x in results) {
-				if (results[x].attributes.UserID===IdUsuario){
-					for (a in Categorys){
-						for(b in results[x].attributes.CustomerID){
-							if(Categorys[a].nameCategory ===results[x].attributes.CustomerID[b]){
-								if (id === Categorys[a].names){
-									document.getElementById(Categorys[a].ID+" "+Categorys[a].nameCategory).style.color="red";
-								}
-							}
-						}
-					}
-				}else{
-					console.log("the user no found")
-				}
-			}
-		},
-		error: function(myObject, error) {
-			// Error occureds
-			console.log( error );
-		}
-	});
-}
-// *************** VIEW FAVORITE FUNCTION ***************
-function viewFavorite() {
-	AllFavorite = [];
+    favorite.find({
+        success: function(results) {
 
-	favorite.each(function(results) {
-		for(b in results.attributes.CustomerID){
-			if(results.attributes.UserID===IdUsuario){
-				for (c in PhotoPaiz){
-					if (PhotoPaiz[c].Category === results.attributes.CustomerID[b]){
-						AllFavorite.push(PhotoPaiz[c]);
-					}
-				}
-			}
-		}
-	});
+            for (x in results) {
+                //console.log(results[x].attributes.CustomerID)
+                //console.log(results[x].attributes.UserID)
+
+                    if (results[x].attributes.UserID===IdUsuario){
+                       // console.log("find user")
+                        for (a in Categorys){
+                           //console.log(Categorys[a].names)
+                            //console.log("a",Categorys[a].nameCategory)
+                            for(b in results[x].attributes.CustomerID){
+                                //console.log("s",results[x].attributes.CustomerID[b])
+                                if(Categorys[a].nameCategory ===results[x].attributes.CustomerID[b]){
+                                    //console.log(":D",Categorys[a].ID,":DD",Categorys[a].nameCategory, "--",Categorys[a].names)
+                                     //console.log("s",id,"---",Categorys[a].names)
+                                    if (id === Categorys[a].names){
+                                        //console.log("se guardo",id,"---",Categorys[a])
+                                           document.getElementById(Categorys[a].ID+" "+Categorys[a].nameCategory).style.color="red";
+                                        console.log(Categorys[a].ID,Categorys[a].nameCategory)
+                                        //HeartPopover.push({id:Categorys[a].ID,name:Categorys[a].nameCategory})
+                                    }
+                                }
+                            }
+                        }
+                }else{
+                    console.log("the user no found")
+                }
+            }
+            //console.log(PhotoPaiz)
+
+      },
+      error: function(myObject, error) {
+        // Error occureds
+        console.log( error );
+      }
+    });
+
 }
 // *************** VIEW PROMOTION FUNCTION ***************
 function viewPromotion(){

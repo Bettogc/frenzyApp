@@ -3,9 +3,10 @@
 var IdUsuario;
 
 function reload() {
-	var PromoSavess = new Parse.Query('PromotionSaved')
-	PromoSavess.equalTo("UserID", IdUsuario);
-	PromoSavess.find({
+    console.log("entro a reload")
+    var PromoSavess = new Parse.Query('PromotionSaved')
+    PromoSavess.equalTo("UserID", IdUsuario);
+    PromoSavess.find({
 		success: function(results) {
 			for (a in results[0].attributes.PromotionID){
 				for (b in PhotoPaiz){
@@ -13,18 +14,18 @@ function reload() {
 						if (PhotoPaiz[b].ColorPin === "silver") {
 							PhotoPaiz[b].ColorPin  = "purple";
 						}
+					}else {
+						PhotoPaiz[b].ColorPin  = "silver";
 					}
-				}else {
-					PhotoPaiz[b].ColorPin  = "silver";
 				}
 			}
+		},
+		error: function(myObject, error) {
+			// Error occureds
+			console.log( error );
 		}
-	},
-	error: function(myObject, error) {
-	// Error occureds
-	console.log( error );
-	}
-});
+	});
+}
 // *********** FUNCTIONS CHANGE COLOR ICON FOOTER *************
 // ******* HOME
 function functionHome() {
@@ -238,25 +239,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	.state('app', {
 		url: "/app",
 		abstract: true,
-		templateUrl: "templates/menu/menu.html",
+		templateUrl: "templates/menu.html",
 		controller: 'AppCtrl'
 	})
 	// ******** FRENZY *****
 	.state('frenzy', {
 		url: "/frenzy",
-		templateUrl: "templates/frenzy/frenzy.html",
+		templateUrl: "templates/frenzy.html",
 	})
 	// ******** FACEBOOK *****
 	.state('login', {
 		url: "/login",
-		templateUrl: "templates/login/login.html"
+		templateUrl: "templates/login.html"
 	})
 	// ******* FAVORITE *******
 	.state('app.favoritos', {
 		url: "/favoritos",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/favoritos/favoritos.html",
+				templateUrl: "templates/favoritos.html",
 				controller: 'OurfavoritesCtrl'
 			}
 		}
@@ -266,7 +267,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/tusFavoritos",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/tusFavoritos/tusFavoritos.html",
+				templateUrl: "templates/tusFavoritos.html",
 				controller: 'AllFavoriteCtrl'
 			}
 		}
@@ -276,7 +277,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/salvados",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/salvados/salvados.html",
+				templateUrl: "templates/salvados.html",
 				controller: 'AllPromotionCtrl'
 			}
 		}
@@ -286,7 +287,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/herramientas",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/herramientas/herramientas.html",
+				templateUrl: "templates/herramientas.html",
 				controller: 'homeCtrl'
 			}
 		}
@@ -296,7 +297,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/ofertas/:superId",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/ofertas/ofertas.html",
+				templateUrl: "templates/ofertas.html",
 				controller: 'PaizCtrl'
 			}
 		}
@@ -306,7 +307,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/playlists",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/page_start/page_start.html",
+				templateUrl: "templates/page_start.html",
 				controller: 'CategoryCtrl'
 			}
 		}
@@ -376,7 +377,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/ofertas",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/ofertas/ofertas.html",
+				templateUrl: "templates/ofertas.html",
 				controller: 'PaizCtrl'
 			}
 		}
@@ -386,7 +387,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/cupones/:CuponID",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/cupones/cupones.html",
+				templateUrl: "templates/cupones.html",
 				controller: 'CuponCtrl'
 			}
 		}
@@ -396,7 +397,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/descripcionOfertas",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/descriptionOfertas/descripcionOfertas.html",
+				templateUrl: "templates/descripcionOfertas.html",
 				controller: 'homeCtrl'
 			}
 		}
@@ -406,7 +407,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/descripcionCupones/:DescriptionID",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/descriptionCupones/descripcionCupones.html",
+				templateUrl: "templates/descripcionCupones.html",
 				controller: 'DescriptionCuponCtrl'
 			}
 		}
