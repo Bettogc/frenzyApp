@@ -49,7 +49,7 @@
 
     <ion-content ng-controller="AllFavoriteCtrl" >
 
-		<div style="height:31px;"></div>
+    <div style="height:31px;"></div>
 
         <div ng-repeat="favorite in chats | filter: {oferta : 'existe'}">
         <!--************  YOUR FAVORITES BODY  *******************-->
@@ -89,7 +89,7 @@
             </div>
             <!--**********  PIN ICON**********-->
             <div class="col col-20">
-                <p class="home pageYourFavoritesIconPin" id="{{favorite.IDpromotion}}" onclick="SalvadosSaveAndDelete(id)" style="color:silver">
+                <p class="home pageYourFavoritesIconPin" id="{{favorite.IDpromotion}}" onclick="SalvadosSaveAndDelete(id)"  style="color:{{favorite.ColorPin}}">
                     W
                 </p>
             </div>
