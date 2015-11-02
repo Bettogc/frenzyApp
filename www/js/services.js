@@ -437,14 +437,15 @@ var cup = Cupon.find({
 							description:results[x].attributes.PromotionDescription,
 							Canjea:results[x].attributes.CuponDiscount,
 							Category:results[x].attributes.Customer[i],
-							Cupon:"existe",
+							cupon:"existe",
 							ColorPinCupon: "silver",
 							BarCodePhoto:results[x].attributes.BarCodePhoto,
 							Presentation:results[x].attributes.Presentation,
 							description:results[x].attributes.PromotionDescription,
 							customer:results[x].attributes.Customer[i],
 							PhotoCupon:results[x].attributes.PhotoCupon,
-							IDCupon:results[x].id
+							IDCupon:results[x].id,
+							Categoryapp:results[x].attributes.CategoryApp
 						});
 					}else{
 						Cupons.push({nul:"con",
@@ -452,14 +453,15 @@ var cup = Cupon.find({
 							description:results[x].attributes.PromotionDescription,
 							Canjea:results[x].attributes.CuponDiscount,
 							Category:results[x].attributes.Customer[i],
-							Cupon:"existe",
+							cupon:"existe",
 							ColorPinCupon: "silver",
 							BarCodePhoto:results[x].attributes.BarCodePhoto,
 							Presentation:results[x].attributes.Presentation,
 							description:results[x].attributes.PromotionDescription,
 							customer:results[x].attributes.Customer[i],
 							PhotoCupon:results[x].attributes.PhotoCupon,
-							IDCupon:results[x].id
+							IDCupon:results[x].id,
+							Categoryapp:results[x].attributes.CategoryApp
 						});
 					}
 				}
@@ -478,15 +480,16 @@ cup.then(function(){
 	PromoSavess.equalTo("UserID", IdUsuario);
 	PromoSavess.find({
 		success: function(results) {
-			for (a in results[0].attributes.PromotionID){
+			for (a in results[0].attributes.CuponID){
 				for (b in Cupons){
-					if (results[0].attributes.PromotionID[a] === Cupons[b].IDCupon){
+					if (results[0].attributes.CuponID[a] === Cupons[b].IDCupon){
 						if (Cupons[b].ColorPinCupon === "silver") {
 							Cupons[b].ColorPinCupon  = "purple";
 						}
 					}
 				}
 			}
+
 		},
 		error: function(myObject, error) {
 			// Error occureds
@@ -601,18 +604,28 @@ query.find({
 			});
 			CategoryListName.push({
 				name: results[x].attributes.CategoryName,direc:results[x].attributes.CategoryName,cont_promo:0,icon: results[x].attributes.IconCategory,
-				color : results[x].attributes.ColorCategory
+				color : results[x].attributes.ColorCategory, cont_cupones:0
 			})
 			name  = results[x].attributes.CategoryName
 		}
 		pro.then(function(){
+
 			for (w in CategoryListName){
+				for (i in Cupons) {
+					if(CategoryListName[w].name == Cupons[i].Categoryapp){
+						CategoryListName[w].cont_cupones = CategoryListName[w].cont_cupones + 1
+					}
+				}
 				for(s in CategoryListNameConteo){
+
 					if(CategoryListName[w].name == CategoryListNameConteo[s].cont){
 						CategoryListName[w].cont_promo = CategoryListName[w].cont_promo + 1
 					}
+
 				}
 			}
+
+
 		});
 	},
 	error: function(myObject, error) {
@@ -774,9 +787,7 @@ function Heart(id){
 							}
 						}
 					}
-				}else{
-					console.log("the user no found")
-				}
+				}else{}
 			}
 		},
 		error: function(myObject, error) {
@@ -804,12 +815,12 @@ function viewFavorite() {
 function viewPromotion(){
 	AllPromotion = [];
 	var con = 0;
-
 	var promotionSavedData = Parse.Object.extend("PromotionSaved");
 	var query = new Parse.Query(promotionSavedData);
 	query.equalTo("UserID", IdUsuario);
 	query.find({
 		success: function(results) {
+
 			for (var i = 0; i < results[0].attributes.PromotionID.length; i++){
 				for(x in promociones) {
 					if (results[0].attributes.PromotionID[i] === promociones[x].id) {
@@ -820,6 +831,14 @@ function viewPromotion(){
 					};
 				};
 			};
+			for (var a = 0; a < results[0].attributes.CuponID.length; a++) {
+				for (c in Cupons) {
+					if (results[0].attributes.CuponID[a] === Cupons[c].IDCupon) {
+						AllPromotion.push(Cupons[c]);
+					};
+				}
+			}
+
 		},
 		error: function(error) {
 			// Error occureds
@@ -887,15 +906,31 @@ function DeletePromotion(UserId, PromotionId) {
 	});
 };
 // *************** SAVE FAVORITE CUPON FUNCTION ***************
-function saveFavoriteCupon(UserId, CuponID) {
+function saveCuponFavorite(UserId, CuponID) {
 	// This function save favorite cupon selected by user in PromotionSaved class in parse
 	result = {
 		'UserID':UserId,
 		'CuponID': CuponID
 	};
-	var saveCupon = Parse.Cloud.run('saveCuponFavorite', {"Array":result});
+	var saveCupon = Parse.Cloud.run('saveFavoriteCupon', {"Array":result});
 
 	saveCupon.then(function(){
 		viewPromotion()
 	});
+};
+
+// ************ DELETE FAVORIT CUPON ***************************
+function deleteFavoriteCupon(UserId, CuponID) {
+   /* This function save favorite promotion selected by user in PromotionSaved class
+   in parse */
+
+  result = {
+      'UserID':UserId,
+      'CuponID': CuponID
+  };
+  var deleteCupon = Parse.Cloud.run('deleteFavoriteCupon', {"Array":result});
+  deleteCupon.then(function(){
+    viewPromotion()
+  });
+
 };

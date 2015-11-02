@@ -1,9 +1,7 @@
-
 // *********  CHANGE OF COLOR ICONS FUNCTION ******************
 var IdUsuario;
 
 function reload() {
-    console.log("entro a reload")
     var PromoSavess = new Parse.Query('PromotionSaved')
     PromoSavess.equalTo("UserID", IdUsuario);
     PromoSavess.find({
@@ -172,6 +170,17 @@ function changeColorPinOffertsWithoutImage(id, IDPromotion) {
 		reload()
 	}
 };
+// ************ FUNCTION CHANGE COLOR PIN CUPON *************
+function changeColorPinCupon(id) {
+	var cssColorCuponPin = document.getElementById(id).style.color;
+	if (cssColorCuponPin == "silver") {
+		document.getElementById(id).style.color = "purple";
+    saveCuponFavorite(IdUsuario, id)
+	} else {
+    deleteFavoriteCupon(IdUsuario, id)
+		document.getElementById(id).style.color = "silver";
+	}
+};
 // *********** FUNCTION CHANGE COLOR HEART FOLLOW **********
 function changeColorHeartFollow(parametro) {
 	var cssColorHeartFollow = document.getElementById("heartFollow").style.color;
@@ -239,25 +248,20 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 	.state('app', {
 		url: "/app",
 		abstract: true,
-		templateUrl: "templates/menu.html",
+		templateUrl: "templates/menu/menu.html",
 		controller: 'AppCtrl'
-	})
-	// ******** FRENZY *****
-	.state('frenzy', {
-		url: "/frenzy",
-		templateUrl: "templates/frenzy.html",
 	})
 	// ******** FACEBOOK *****
 	.state('login', {
 		url: "/login",
-		templateUrl: "templates/login.html"
+		templateUrl: "templates/login/login.html"
 	})
 	// ******* FAVORITE *******
 	.state('app.favoritos', {
 		url: "/favoritos",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/favoritos.html",
+				templateUrl: "templates/favorite/favorites.html",
 				controller: 'OurfavoritesCtrl'
 			}
 		}
@@ -267,7 +271,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/tusFavoritos",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/tusFavoritos.html",
+				templateUrl: "templates/your_favorites/your_favorites.html",
 				controller: 'AllFavoriteCtrl'
 			}
 		}
@@ -277,7 +281,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/salvados",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/salvados.html",
+				templateUrl: "templates/saved/saved.html",
 				controller: 'AllPromotionCtrl'
 			}
 		}
@@ -287,7 +291,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/herramientas",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/herramientas.html",
+				templateUrl: "templates/tools/tools.html",
 				controller: 'homeCtrl'
 			}
 		}
@@ -297,7 +301,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/ofertas/:superId",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/ofertas.html",
+				templateUrl: "templates/offers/offers.html",
 				controller: 'PaizCtrl'
 			}
 		}
@@ -307,7 +311,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/playlists",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/page_start.html",
+				templateUrl: "templates/page_start/page_start.html",
 				controller: 'CategoryCtrl'
 			}
 		}
@@ -327,7 +331,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/playlists/Restaurantes",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/categories/restaurantes.html",
+				templateUrl: "templates/categories/restaurants.html",
 				controller: 'RestaurantesCtrl'
 			}
 		}
@@ -337,7 +341,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/playlists/Moda",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/categories/moda.html",
+				templateUrl: "templates/categories/fashion.html",
 				controller: 'ModaCtrl'
 			}
 		}
@@ -347,7 +351,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/playlists/Entretenimiento",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/categories/entretenimiento.html",
+				templateUrl: "templates/categories/entertainment.html",
 				controller: 'EntretenimientoCtrl'
 			}
 		}
@@ -357,7 +361,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/playlists/Electrónicos",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/categories/electronicos.html",
+				templateUrl: "templates/categories/electronics.html",
 				controller: 'ElectronicosCtrl'
 			}
 		}
@@ -377,7 +381,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/ofertas",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/ofertas.html",
+				templateUrl: "templates/offers/offers.html",
 				controller: 'PaizCtrl'
 			}
 		}
@@ -387,7 +391,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/cupones/:CuponID",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/cupones.html",
+				templateUrl: "templates/coupon/coupon.html",
 				controller: 'CuponCtrl'
 			}
 		}
@@ -397,7 +401,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/descripcionOfertas",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/descripcionOfertas.html",
+				templateUrl: "templates/offer_description/offerDescription.html",
 				controller: 'homeCtrl'
 			}
 		}
@@ -407,7 +411,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 		url: "/descripcionCupones/:DescriptionID",
 		views: {
 			'menuContent': {
-				templateUrl: "templates/descripcionCupones.html",
+				templateUrl: "templates/coupon_description/couponDescription.html",
 				controller: 'DescriptionCuponCtrl'
 			}
 		}
@@ -432,7 +436,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services','n
 .controller('loginCtrl', function($scope, $state, $cordovaFacebook) {
 	$scope.currentUser = Parse.User.current();
 	// ******* LOGIN VALIDATION *******
-	if ($scope.currentUser == null ){} else {
+	if ($scope.currentUser == null ){
+    console.log($scope.currentUser);
+  } else {
 		IdUsuario = String($scope.currentUser["attributes"].authData.facebook.id)
 		viewPromotion()
 		$state.go('app.playlists');

@@ -1,4 +1,5 @@
 // ****************************************************
+var displayNoneInline = [];
 angular.module('starter.controllers', ['ionic'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $ionicPopover) {
@@ -103,6 +104,18 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ********************* CUPON CONTROLLER *********************
 .controller('CuponCtrl', function($scope, $stateParams ,Cupons) {
+/********************  tamayo  ************************/
+/******************************************************/      
+  $scope.llenar1=function(){
+      displayNoneInline=[{none:"none",inline:"inline"}];
+  };
+    /***********************/
+    $scope.llenar2=function(){
+      displayNoneInline=[{none:"inline",inline:"none"}];
+  };
+/*****************************************************/
+/*******************************************************/
+  
 	$scope.$on('$ionicView.enter', function() {
 		$scope.cupons = Cupons.all($stateParams.CuponID);
 		$scope.heartMenu = "silver";
@@ -128,7 +141,10 @@ angular.module('starter.controllers', ['ionic'])
 })
 // ********************* CUPON DESCRIPTION CONTROLLER *********************
 .controller('DescriptionCuponCtrl', function($scope, $stateParams ,DescriptionCupons) {
-	$scope.cupons = DescriptionCupons.all($stateParams.DescriptionID);
+    /************  TAMAYO  *************/
+    $scope.noneDisplay=displayNoneInline;
+    /***********************************/
+    $scope.cupons = DescriptionCupons.all($stateParams.DescriptionID);
 })
 // ********* SUPERMARKET CONTROLLER *********
 .controller('SupermercadoCtrl', function($scope, Supermercados) {
